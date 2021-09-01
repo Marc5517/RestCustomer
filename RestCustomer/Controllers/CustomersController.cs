@@ -26,6 +26,10 @@ namespace RestCustomer.Controllers
             new Customer(6, "Max Olegaard", "max@olegaard.dk", "Skrejrupvej 11", 8410, 56781541)
         };
 
+        /// <summary>
+        /// Får fat i alle kunder fra databasen
+        /// </summary>
+        /// <returns></returns>
         // GET: api/<CustomersController>
         [HttpGet]
         public IEnumerable<Customer> GetAll()
@@ -35,6 +39,11 @@ namespace RestCustomer.Controllers
             //return Customers;
         }
 
+        /// <summary>
+        /// Få fat i en kunde ud fra id (kundenummer).
+        /// </summary>
+        /// <param name="customerNr"></param>
+        /// <returns></returns>
         // GET api/<CustomersController>/5
         [HttpGet]
         [Route("{customerNr}")]
@@ -45,17 +54,26 @@ namespace RestCustomer.Controllers
             //return Customers.Find(c => c.CustomerNr == customerNr);
         }
 
+        /// <summary>
+        /// Kan finde alle kunder (på listen) der har en adresse som minder om det der skrives ind.
+        /// </summary>
+        /// <param name="addresse"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("Addresse/{addresse}")]
         public IEnumerable<Customer> GetByCustomerAddresse(string addresse)
         {
-            //Virker ikke helt endnu
             //ManageCustomer mc = new ManageCustomer();
             //return mc.GetByAddresse(addresse);
             List<Customer> lCustomers = Customers.FindAll(c => c.Addresse.Contains(addresse));
             return lCustomers;
         }
 
+        /// <summary>
+        /// Kan finde alle kunder udfra telefonnummer
+        /// </summary>
+        /// <param name="telefonNr"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("TelefonNr/{telefonNr}")]
         public IEnumerable<Customer> GetCustomerByPhoneNr(int telefonNr)
@@ -64,6 +82,10 @@ namespace RestCustomer.Controllers
             return lCustomers;
         }
 
+        /// <summary>
+        /// Denne metode skaber en ny kunde.
+        /// </summary>
+        /// <param name="value"></param>
         // POST api/<CustomersController>
         [HttpPost]
         public void Post([FromBody] Customer value)
@@ -72,6 +94,12 @@ namespace RestCustomer.Controllers
             mc.Add(value);
         }
 
+        /// <summary>
+        /// Opdatere en kunde.
+        /// </summary>
+        /// <param name="customerNr"></param>
+        /// <param name="c"></param>
+        /// <returns></returns>
         // PUT api/<CustomersController>/5
         [HttpPut]
         [Route("{customerNr}")]
@@ -89,6 +117,11 @@ namespace RestCustomer.Controllers
             }
         }
 
+        /// <summary>
+        /// Kan slette en kunde ud fra id (kundenummer)
+        /// </summary>
+        /// <param name="customerNr"></param>
+        /// <returns></returns>
         // DELETE api/<CustomersController>/5
         [HttpDelete]
         [Route("{customerNr}")]
