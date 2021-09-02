@@ -13,10 +13,11 @@ namespace RestCustomer.DBUtil
 
         private const String Get_All = "select * from Customer";
         private const String Get_By_Id = "select * from Customer WHERE CustomerNr = @ID";
-        private const String Get_By_Addresse = "select * from Customer WHERE Addresse LIKE @Addresse";
+        private const String Get_By_Addresse = "select * from Customer WHERE Addresse LIKE '@Addresse'";
+
         private const String INSERT =
-            "insert into Customer(Name, Email, Addresse, PostNr, TelefonNr) Values(@Name, @Email, @Addresse, @PostNr, @TelefonNr)";
-        private const String UPDATE_Customer = "UPDATE Customer set Name=@Name, Email=@Email, Addresse=@Addresse, PostNr=@PostNr, TelefonNr=@TelefonNr where CustomerNr=@ID";
+            "insert into Customer(Name, Email, Addresse, TownCity, Country, PostNr, TelefonNr, Currency) Values(@Name, @Email, @Addresse, @TownCity, @Country, @PostNr, @TelefonNr, @Currency)";
+        private const String UPDATE_Customer = "UPDATE Customer set Name=@Name, Email=@Email, Addresse=@Addresse, TownCity=@TownCity, Country=@Country, PostNr=@PostNr, TelefonNr=@TelefonNr, Currency=@Currency where CustomerNr=@ID";
         private const String DELETE_Customer = "DELETE Customer WHERE CustomerNr = @ID";
 
         public IEnumerable<Customer> Get()
@@ -59,6 +60,7 @@ namespace RestCustomer.DBUtil
             return c;
         }
 
+
         public IEnumerable<Customer> GetByAddresse(string addresse)
         {
             List<Customer> cList = new List<Customer>();
@@ -92,8 +94,11 @@ namespace RestCustomer.DBUtil
                 cmd.Parameters.AddWithValue("@Name", value.Name);
                 cmd.Parameters.AddWithValue("@Email", value.Email);
                 cmd.Parameters.AddWithValue("@Addresse", value.Addresse);
+                cmd.Parameters.AddWithValue("@TownCity", value.TownCity);
+                cmd.Parameters.AddWithValue("@Country", value.Country);
                 cmd.Parameters.AddWithValue("@PostNr", value.PostNr);
                 cmd.Parameters.AddWithValue("@TelefonNr", value.TelefonNr);
+                cmd.Parameters.AddWithValue("@Currency", value.Currency);
 
                 int rowsAffected = cmd.ExecuteNonQuery();
                 // evt. return rowsAffected == 1 => true if inserted otherwise false
@@ -115,8 +120,11 @@ namespace RestCustomer.DBUtil
                 cmd.Parameters.AddWithValue("@Name", customer.Name);
                 cmd.Parameters.AddWithValue("@Email", customer.Email);
                 cmd.Parameters.AddWithValue("@Addresse", customer.Addresse);
+                cmd.Parameters.AddWithValue("@TownCity", customer.TownCity);
+                cmd.Parameters.AddWithValue("@Country", customer.Country);
                 cmd.Parameters.AddWithValue("@PostNr", customer.PostNr);
                 cmd.Parameters.AddWithValue("@TelefonNr", customer.TelefonNr);
+                cmd.Parameters.AddWithValue("@Currency", customer.Currency);
 
                 int rowsAffected = cmd.ExecuteNonQuery();
                 // evt. return rowsAffected == 1 => true if inserted otherwise false
@@ -153,8 +161,11 @@ namespace RestCustomer.DBUtil
             customer.Name = reader.GetString(1);
             customer.Email = reader.GetString(2);
             customer.Addresse = reader.GetString(3);
-            customer.PostNr = reader.GetInt32(4);
-            customer.TelefonNr = reader.GetInt32(5);
+            customer.TownCity = reader.GetString(4);
+            customer.Country = reader.GetString(5);
+            customer.PostNr = reader.GetInt32(6);
+            customer.TelefonNr = reader.GetInt32(7);
+            customer.Currency = reader.GetString(8);
 
             return customer;
         }

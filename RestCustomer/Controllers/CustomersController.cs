@@ -18,12 +18,12 @@ namespace RestCustomer.Controllers
         private string connectionString = ConnectionString.connectionString;
         private static readonly List<Customer> Customers = new List<Customer>()
         {
-            new Customer(1, "Anne Glaubig", "anne@glaubig.dk", "Roskildevej 179", 3600, 26984054),
-            new Customer(2, "Lene Kirkegaard", "lene@kirkegaard.com", "Skrejrupvej 10", 8410, 76209365),
-            new Customer(3, "Izuma Suzuki", "izum@suzuki.dk", "Somewhere 56", 4780, 90835622),
-            new Customer(4, "Josef Stalin", "jose@stalin.com", "Hell 666", 6666, 44444444),
-            new Customer(5, "Robin Holder", "robi@holder.com", "Roskildevej 45", 3600, 29076341),
-            new Customer(6, "Max Olegaard", "max@olegaard.dk", "Skrejrupvej 11", 8410, 56781541)
+            new Customer(1, "Anne Glaubig", "anne@glaubig.dk", "Roskildevej 179", "Roskilde", "Denmark", 3600, 26984054, "DKK"),
+            new Customer(2, "Lene Kirkegaard", "lene@kirkegaard.com", "Skrejrupvej 10", "Rønde", "Denmark", 8410, 76209365, "DKK"),
+            new Customer(3, "Izuma Suzuki", "izum@suzuki.dk", "Somewhere 56", "Don't know", "Netherworld", 4780, 90835622, "NWM"),
+            new Customer(4, "Josef Stalin", "jose@stalin.com", "Hell 666", "6th Circle", "Hell", 6666, 44444444, "HM"),
+            new Customer(5, "Robin Holder", "robi@holder.com", "Roskildevej 45", "Roskilde", "Denmark", 3600, 29076341, "DKK"),
+            new Customer(6, "Max Olegaard", "max@olegaard.dk", "Skrejrupvej 11", "Rønde", "Denmark", 8410, 56781541, "DKK")
         };
 
         /// <summary>
@@ -63,10 +63,10 @@ namespace RestCustomer.Controllers
         [Route("Addresse/{addresse}")]
         public IEnumerable<Customer> GetByCustomerAddresse(string addresse)
         {
-            //ManageCustomer mc = new ManageCustomer();
-            //return mc.GetByAddresse(addresse);
-            List<Customer> lCustomers = Customers.FindAll(c => c.Addresse.Contains(addresse));
-            return lCustomers;
+            ManageCustomer mc = new ManageCustomer();
+            return mc.GetByAddresse(addresse);
+            //List<Customer> lCustomers = Customers.FindAll(c => c.Addresse.Contains(addresse));
+            //return lCustomers;
         }
 
         /// <summary>
