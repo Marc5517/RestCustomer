@@ -82,6 +82,20 @@ namespace RestCustomer.Controllers
             return lCustomers;
         }
 
+
+        /// <summary>
+        /// Kan finde en kunde via navn, email eller adresse.
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("search/{search}")]
+        public IEnumerable<Customer> GetCustomerBySearch(string search)
+        {
+            List<Customer> lCustomers = Customers.FindAll(c => c.Name.Contains(search) || c.Email.Contains(search) || c.Addresse.Contains(search));
+            return lCustomers;
+        }
+
         /// <summary>
         /// Denne metode skaber en ny kunde.
         /// </summary>
