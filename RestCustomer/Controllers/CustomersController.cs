@@ -79,7 +79,9 @@ namespace RestCustomer.Controllers
         [Route("search/{search}")]
         public IEnumerable<Customer> GetCustomerBySearch(string search)
         {
-            List<Customer> lCustomers = Customers.FindAll(c => c.Name.Contains(search) || c.Email.Contains(search) || c.Addresse.Contains(search));
+            //ManageCustomer mc = new ManageCustomer();
+            //return mc.GetBySearch(search);
+            List<Customer> lCustomers = Customers.FindAll(c => c.Name.Contains(search) || c.Email.Contains(search) || c.Addresse.Contains(search) || c.TownCity.Contains(search) || c.Country.Contains(search));
             return lCustomers;
         }
 

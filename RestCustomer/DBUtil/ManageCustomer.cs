@@ -13,10 +13,9 @@ namespace RestCustomer.DBUtil
 
         private const String Get_All = "select * from Customer";
         private const String Get_By_Id = "select * from Customer WHERE CustomerNr = @ID";
-        private const String Get_By_Addresse = "select * from Customer WHERE Addresse LIKE '@Addresse'";
-
+        private const String Get_By_Addresse = "select * from Customer WHERE Addresse LIKE @Addresse";
         private const String Get_By_Search =
-            "select * from Customer WHERE Email LIKE '@search' OR Name LIKE '@search' OR Addresse LIKE '@search'";
+            "select * from Customer WHERE Email LIKE @search OR Name LIKE @search OR Addresse LIKE @search OR CityTown LIKE @search OR Country LIKE @search";
         private const String INSERT =
             "insert into Customer(Name, Email, Addresse, TownCity, Country, PostNr, TelefonNr, Currency) Values(@Name, @Email, @Addresse, @TownCity, @Country, @PostNr, @TelefonNr, @Currency)";
         private const String UPDATE_Customer = "UPDATE Customer set Name=@Name, Email=@Email, Addresse=@Addresse, TownCity=@TownCity, Country=@Country, PostNr=@PostNr, TelefonNr=@TelefonNr, Currency=@Currency where CustomerNr=@ID";
@@ -95,7 +94,7 @@ namespace RestCustomer.DBUtil
             {
                 conn.Open();
 
-                using (var cmd = new SqlCommand(Get_By_Addresse, conn))
+                using (var cmd = new SqlCommand(Get_By_Search, conn))
                 {
                     cmd.Parameters.AddWithValue("@search", search);
                     SqlDataReader reader = cmd.ExecuteReader();
