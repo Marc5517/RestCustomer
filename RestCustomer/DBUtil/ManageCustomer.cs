@@ -87,6 +87,30 @@ namespace RestCustomer.DBUtil
             return cList;
         }
 
+        public IEnumerable<Customer> GetBySearch(string search)
+        {
+            List<Customer> cList = new List<Customer>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                using (var cmd = new SqlCommand(Get_By_Addresse, conn))
+                {
+                    cmd.Parameters.AddWithValue("@search", search);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Customer cust = ReadNextElement(reader);
+                        cList.Add(cust);
+                    }
+                    reader.Close();
+                }
+            }
+
+            return cList;
+        }
+
         public void Add(Customer value)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
