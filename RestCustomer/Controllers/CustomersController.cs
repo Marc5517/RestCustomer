@@ -69,19 +69,6 @@ namespace RestCustomer.Controllers
             //return lCustomers;
         }
 
-        /// <summary>
-        /// Kan finde alle kunder udfra telefonnummer
-        /// </summary>
-        /// <param name="telefonNr"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("TelefonNr/{telefonNr}")]
-        public IEnumerable<Customer> GetCustomerByPhoneNr(int telefonNr)
-        {
-            List<Customer> lCustomers = Customers.FindAll(c => c.TelefonNr.Equals(telefonNr));
-            return lCustomers;
-        }
-
 
         /// <summary>
         /// Kan finde en kunde via navn, email eller adresse.
