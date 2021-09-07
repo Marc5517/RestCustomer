@@ -13,12 +13,11 @@ namespace RestCustomer.DBUtil
 
         private const String Get_All = "select * from Customer";
         private const String Get_By_Id = "select * from Customer WHERE CustomerNr = @ID";
-        private const String Get_By_Addresse = "select * from Customer WHERE Addresse LIKE @Addresse";
         private const String Get_By_Search =
-            "select * from Customer WHERE Email LIKE @search OR Name LIKE @search OR Addresse LIKE @search OR CityTown LIKE @search OR Country LIKE @search";
+            "select * from Customer WHERE Email LIKE @search OR Name LIKE @search OR Addresse LIKE @search OR TownCity LIKE @search OR Country LIKE @search";
         private const String INSERT =
-            "insert into Customer(Name, Email, Addresse, TownCity, Country, PostNr, TelefonNr, Currency) Values(@Name, @Email, @Addresse, @TownCity, @Country, @PostNr, @TelefonNr, @Currency)";
-        private const String UPDATE_Customer = "UPDATE Customer set Name=@Name, Email=@Email, Addresse=@Addresse, TownCity=@TownCity, Country=@Country, PostNr=@PostNr, TelefonNr=@TelefonNr, Currency=@Currency where CustomerNr=@ID";
+            "insert into Customer(Name, Email, Addresse, TownCity, Country, PostNr, TelefonNr, Currency, PublicEntry) Values(@Name, @Email, @Addresse, @TownCity, @Country, @PostNr, @TelefonNr, @Currency, @PublicEntry)";
+        private const String UPDATE_Customer = "UPDATE Customer set Name=@Name, Email=@Email, Addresse=@Addresse, TownCity=@TownCity, Country=@Country, PostNr=@PostNr, TelefonNr=@TelefonNr, Currency=@Currency, PublicEntry=@PublicEntry where CustomerNr=@ID";
         private const String DELETE_Customer = "DELETE Customer WHERE CustomerNr = @ID";
 
         public IEnumerable<Customer> Get()
@@ -61,31 +60,6 @@ namespace RestCustomer.DBUtil
             return c;
         }
 
-
-        public IEnumerable<Customer> GetByAddresse(string addresse)
-        {
-            List<Customer> cList = new List<Customer>();
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-
-                using (var cmd = new SqlCommand(Get_By_Addresse, conn))
-                {
-                    cmd.Parameters.AddWithValue("@Addresse", addresse);
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        Customer cust = ReadNextElement(reader);
-                        cList.Add(cust);
-                    }
-                    reader.Close();
-                }
-            }
-
-            return cList;
-        }
-
         public IEnumerable<Customer> GetBySearch(string search)
         {
             List<Customer> cList = new List<Customer>();
@@ -94,7 +68,7 @@ namespace RestCustomer.DBUtil
             {
                 conn.Open();
 
-                using (var cmd = new SqlCommand(Get_By_Search, conn))
+                using (SqlCommand cmd = new SqlCommand(Get_By_Search, conn))
                 {
                     cmd.Parameters.AddWithValue("@search", search);
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -124,6 +98,7 @@ namespace RestCustomer.DBUtil
                 cmd.Parameters.AddWithValue("@PostNr", value.PostNr);
                 cmd.Parameters.AddWithValue("@TelefonNr", value.TelefonNr);
                 cmd.Parameters.AddWithValue("@Currency", value.Currency);
+                cmd.Parameters.AddWithValue("@PublicEntry", value.PublicEntry);
 
                 int rowsAffected = cmd.ExecuteNonQuery();
                 // evt. return rowsAffected == 1 => true if inserted otherwise false
@@ -150,6 +125,7 @@ namespace RestCustomer.DBUtil
                 cmd.Parameters.AddWithValue("@PostNr", customer.PostNr);
                 cmd.Parameters.AddWithValue("@TelefonNr", customer.TelefonNr);
                 cmd.Parameters.AddWithValue("@Currency", customer.Currency);
+                cmd.Parameters.AddWithValue("@PublicEntry", customer.PublicEntry);
 
                 int rowsAffected = cmd.ExecuteNonQuery();
                 // evt. return rowsAffected == 1 => true if inserted otherwise false
@@ -191,6 +167,7 @@ namespace RestCustomer.DBUtil
             customer.PostNr = reader.GetInt32(6);
             customer.TelefonNr = reader.GetInt32(7);
             customer.Currency = reader.GetString(8);
+            customer.PublicEntry = reader.GetDateTime(9);
 
             return customer;
         }
