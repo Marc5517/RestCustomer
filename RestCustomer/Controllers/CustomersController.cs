@@ -54,6 +54,15 @@ namespace RestCustomer.Controllers
             //return Customers.Find(c => c.CustomerNr == customerNr);
         }
 
+        [HttpGet]
+        [Route("addresse/{addresse}")]
+        public IEnumerable<Customer> GetCustomerByAddresse(string addresse)
+        {
+            ManageCustomer mc = new ManageCustomer();
+            return mc.GetByAddresse(addresse);
+            //List<Customer> lCustomers = Customers.FindAll(c => c.Addresse.Contains(addresse));
+            //return lCustomers;
+        }
 
         /// <summary>
         /// Kan finde en kunde via navn, email, adresse, by eller land.

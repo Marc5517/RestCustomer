@@ -12,13 +12,6 @@ namespace RestCustomer.DBUtil
         private const String connectionString = @"Server=tcp:oursqlservice.database.windows.net,1433;Initial Catalog=RestDB;Persist Security Info=False;User ID=Secret!;Password=12345678A!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
         private const String Get_All = "select * from Customer";
-        private const String Get_By_Id = "select * from Customer WHERE CustomerNr = @ID";
-        private const String Get_By_Search =
-            "select * from Customer WHERE Email LIKE @search OR Name LIKE @search OR Addresse LIKE @search OR TownCity LIKE @search OR Country LIKE @search";
-        private const String INSERT =
-            "insert into Customer(Name, Email, Addresse, TownCity, Country, PostNr, TelefonNr, Currency, PublicEntry) Values(@Name, @Email, @Addresse, @TownCity, @Country, @PostNr, @TelefonNr, @Currency, @PublicEntry)";
-        private const String UPDATE_Customer = "UPDATE Customer set Name=@Name, Email=@Email, Addresse=@Addresse, TownCity=@TownCity, Country=@Country, PostNr=@PostNr, TelefonNr=@TelefonNr, Currency=@Currency, PublicEntry=@PublicEntry where CustomerNr=@ID";
-        private const String DELETE_Customer = "DELETE Customer WHERE CustomerNr = @ID";
 
         public IEnumerable<Customer> Get()
         {
@@ -41,6 +34,8 @@ namespace RestCustomer.DBUtil
             return liste;
         }
 
+        private const String Get_By_Id = "select * from Customer WHERE CustomerNr = @ID";
+
         public Customer GetById(int customerNr)
         {
             Customer c = new Customer();
@@ -59,6 +54,35 @@ namespace RestCustomer.DBUtil
 
             return c;
         }
+
+        private const String Get_By_Addresse = "select * from Customer WHERE Addresse LIKE '%@addresse%'";
+
+        public IEnumerable<Customer> GetByAddresse(string addresse)
+        {
+            List<Customer> cAList = new List<Customer>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(Get_By_Addresse, conn))
+                {
+                    cmd.Parameters.AddWithValue("addresse", addresse);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Customer cus = ReadNextElement(reader);
+                        cAList.Add(cus);
+                    }
+                    reader.Close();
+                }
+            }
+
+            return cAList;
+        }
+
+        private const String Get_By_Search =
+            "select * from Customer WHERE Email LIKE '%@search%' OR Name LIKE '%@search%' OR Addresse LIKE '%@search%' OR TownCity LIKE '%@search%' OR Country LIKE '%@search%'";
 
         public IEnumerable<Customer> GetBySearch(string search)
         {
@@ -84,6 +108,9 @@ namespace RestCustomer.DBUtil
             return cList;
         }
 
+        private const String INSERT =
+            "insert into Customer(Name, Email, Addresse, TownCity, Country, PostNr, TelefonNr, Currency, PublicEntry) Values(@Name, @Email, @Addresse, @TownCity, @Country, @PostNr, @TelefonNr, @Currency, @PublicEntry)";
+
         public void Add(Customer value)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -107,6 +134,7 @@ namespace RestCustomer.DBUtil
             // evt. hente sidste måling og sende tilbage
         }
 
+        private const String UPDATE_Customer = "UPDATE Customer set Name=@Name, Email=@Email, Addresse=@Addresse, TownCity=@TownCity, Country=@Country, PostNr=@PostNr, TelefonNr=@TelefonNr, Currency=@Currency, PublicEntry=@PublicEntry where CustomerNr=@ID";
 
         public void UpdateCustomer(int customerNr, Customer customer)
         {
@@ -136,6 +164,8 @@ namespace RestCustomer.DBUtil
                 }
             }
         }
+
+        private const String DELETE_Customer = "DELETE Customer WHERE CustomerNr = @ID";
 
         public Customer DeleteCustomer(int customerNr)
         {
