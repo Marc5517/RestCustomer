@@ -67,9 +67,9 @@ namespace RestCustomer.DBUtil
 
                 using (SqlCommand cmd = new SqlCommand(Get_By_Addresse, conn))
                 {
-                    cmd.Parameters.AddWithValue("addresse", addresse);
+                    cmd.Parameters.AddWithValue("@addresse", addresse);
                     SqlDataReader reader = cmd.ExecuteReader();
-                    if (reader.Read())
+                    while (reader.Read())
                     {
                         Customer cus = ReadNextElement(reader);
                         cAList.Add(cus);
