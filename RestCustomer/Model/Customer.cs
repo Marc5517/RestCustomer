@@ -16,6 +16,7 @@ namespace RestCustomer.Model
         private int _postNr;
         private int _telefonNr;
         private string _currency;
+        private int _cvr;
         private DateTime _publicEntry;
 
         public Customer()
@@ -23,7 +24,7 @@ namespace RestCustomer.Model
 
         }
 
-        public Customer(int customerNr, string name, string email, string addresse, string townCity, string country, int postNr, int telefonNr, string currency, DateTime publicEntry)
+        public Customer(int customerNr, string name, string email, string addresse, string townCity, string country, int postNr, int telefonNr, string currency, int cvr, DateTime publicEntry)
         {
             _customerNr = customerNr;
             _name = name;
@@ -34,6 +35,7 @@ namespace RestCustomer.Model
             _postNr = postNr;
             _telefonNr = telefonNr;
             _currency = currency;
+            _cvr = cvr;
             PublicEntry = publicEntry;
         }
 
@@ -118,6 +120,15 @@ namespace RestCustomer.Model
             }
         }
 
+        public int CVR
+        {
+            get => _cvr;
+            set
+            {
+                _cvr = value;
+            }
+        }
+
         public DateTime PublicEntry
         {
             get => _publicEntry;
@@ -132,7 +143,7 @@ namespace RestCustomer.Model
             return $"{nameof(CustomerNr)}: {_customerNr}, {nameof(Name)}: {_name}, " +
                    $"{nameof(Email)}: {_email} {nameof(Addresse)}: {_addresse}, {nameof(TownCity)}: {_townCity}, " +
                    $"{nameof(Country)}: {_country}, {nameof(PostNr)}: {_postNr}, {nameof(TelefonNr)}: {_telefonNr}, " +
-                   $"{nameof(Currency)}: {_currency}, {nameof(PublicEntry)}: {_publicEntry}";
+                   $"{nameof(Currency)}: {_currency}, {nameof(CVR)}: {_cvr}, {nameof(PublicEntry)}: {_publicEntry}";
         }
     }
 }

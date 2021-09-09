@@ -109,7 +109,7 @@ namespace RestCustomer.DBUtil
         }
 
         private const String INSERT =
-            "insert into Customer(Name, Email, Addresse, TownCity, Country, PostNr, TelefonNr, Currency, PublicEntry) Values(@Name, @Email, @Addresse, @TownCity, @Country, @PostNr, @TelefonNr, @Currency, @PublicEntry)";
+            "insert into Customer(Name, Email, Addresse, TownCity, Country, PostNr, TelefonNr, Currency, CVR, PublicEntry) Values(@Name, @Email, @Addresse, @TownCity, @Country, @PostNr, @TelefonNr, @Currency, @CVR, @PublicEntry)";
 
         public void Add(Customer value)
         {
@@ -125,6 +125,7 @@ namespace RestCustomer.DBUtil
                 cmd.Parameters.AddWithValue("@PostNr", value.PostNr);
                 cmd.Parameters.AddWithValue("@TelefonNr", value.TelefonNr);
                 cmd.Parameters.AddWithValue("@Currency", value.Currency);
+                cmd.Parameters.AddWithValue("@CVR", value.CVR);
                 cmd.Parameters.AddWithValue("@PublicEntry", value.PublicEntry);
 
                 int rowsAffected = cmd.ExecuteNonQuery();
@@ -134,7 +135,7 @@ namespace RestCustomer.DBUtil
             // evt. hente sidste måling og sende tilbage
         }
 
-        private const String UPDATE_Customer = "UPDATE Customer set Name=@Name, Email=@Email, Addresse=@Addresse, TownCity=@TownCity, Country=@Country, PostNr=@PostNr, TelefonNr=@TelefonNr, Currency=@Currency, PublicEntry=@PublicEntry where CustomerNr=@ID";
+        private const String UPDATE_Customer = "UPDATE Customer set Name=@Name, Email=@Email, Addresse=@Addresse, TownCity=@TownCity, Country=@Country, PostNr=@PostNr, TelefonNr=@TelefonNr, Currency=@Currency, CVR=@CVR, PublicEntry=@PublicEntry where CustomerNr=@ID";
 
         public void UpdateCustomer(int customerNr, Customer customer)
         {
@@ -153,6 +154,7 @@ namespace RestCustomer.DBUtil
                 cmd.Parameters.AddWithValue("@PostNr", customer.PostNr);
                 cmd.Parameters.AddWithValue("@TelefonNr", customer.TelefonNr);
                 cmd.Parameters.AddWithValue("@Currency", customer.Currency);
+                cmd.Parameters.AddWithValue("@CVR", customer.CVR);
                 cmd.Parameters.AddWithValue("@PublicEntry", customer.PublicEntry);
 
                 int rowsAffected = cmd.ExecuteNonQuery();
@@ -197,7 +199,8 @@ namespace RestCustomer.DBUtil
             customer.PostNr = reader.GetInt32(6);
             customer.TelefonNr = reader.GetInt32(7);
             customer.Currency = reader.GetString(8);
-            customer.PublicEntry = reader.GetDateTime(9);
+            customer.CVR = reader.GetInt32(9);
+            customer.PublicEntry = reader.GetDateTime(10);
 
             return customer;
         }
