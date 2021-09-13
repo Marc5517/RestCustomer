@@ -55,7 +55,7 @@ namespace RestCustomer.DBUtil
             return c;
         }
 
-        private const String Get_By_Addresse = "select * from Customer WHERE Addresse LIKE '%@addresse%'";
+        private const String Get_By_Addresse = "select * from Customer WHERE Addresse LIKE @addresse";
 
         public IEnumerable<Customer> GetByAddresse(string addresse)
         {
@@ -67,7 +67,7 @@ namespace RestCustomer.DBUtil
 
                 using (SqlCommand cmd = new SqlCommand(Get_By_Addresse, conn))
                 {
-                    cmd.Parameters.AddWithValue("@addresse", addresse);
+                    cmd.Parameters.AddWithValue("@addresse", $"%{addresse}%");
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
@@ -82,7 +82,7 @@ namespace RestCustomer.DBUtil
         }
 
         private const String Get_By_Search =
-            "select * from Customer WHERE Email LIKE '%@search%' OR Name LIKE '%@search%' OR Addresse LIKE '%@search%' OR TownCity LIKE '%@search%' OR Country LIKE '%@search%'";
+            "select * from Customer WHERE Email LIKE @search OR Name LIKE @search OR Addresse LIKE @search OR TownCity LIKE @search OR Country LIKE @search";
 
         public IEnumerable<Customer> GetBySearch(string search)
         {
@@ -94,7 +94,7 @@ namespace RestCustomer.DBUtil
 
                 using (SqlCommand cmd = new SqlCommand(Get_By_Search, conn))
                 {
-                    cmd.Parameters.AddWithValue("@search", search);
+                    cmd.Parameters.AddWithValue("@search", $"%{search}%");
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
