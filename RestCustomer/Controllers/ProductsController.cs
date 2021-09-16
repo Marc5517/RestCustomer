@@ -38,17 +38,31 @@ namespace RestCustomer.Controllers
         [Route("{productId}")]
         public Product GetById(int productId)
         {
-            return Products.Find(p => p.ProductId == productId);
+            ManageProduct mp = new ManageProduct();
+            return mp.GetById(productId);
+            //return Products.Find(p => p.ProductId == productId);
+        }
+
+        [HttpGet]
+        [Route("customerNr/{customerNr}")]
+        public IEnumerable<Product> GetCustomerByAddresse(int customerNr)
+        {
+            ManageProduct mp = new ManageProduct();
+            return mp.GetByCustomerNr(customerNr);
+            //List<Product> lProducts = Products.FindAll(p => p.CustomerNr.Equals(customerNr));
+            //return lProducts;
         }
 
         // POST api/<ProductsController>
         [HttpPost]
-        public int AddProduct([FromBody] Product product)
+        public void AddProduct([FromBody] Product value)
         {
-            Products.Add(product);
-            int newId = Products.Max(p => p.ProductId) + 1;
-            product.ProductId = newId;
-            return newId;
+            //Products.Add(product);
+            //int newId = Products.Max(p => p.ProductId) + 1;
+            //product.ProductId = newId;
+            //return newId;
+            ManageProduct mp = new ManageProduct();
+            mp.Add(value);
         }
 
 
