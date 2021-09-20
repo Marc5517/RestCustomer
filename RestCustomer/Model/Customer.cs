@@ -19,6 +19,15 @@ namespace RestCustomer.Model
         private int _cvr;
         private DateTime _publicEntry;
 
+        public Customer(string name, string email, string addresse, string townCity, int postNr)
+        {
+            _name = name;
+            _email = email;
+            _addresse = addresse;
+            _townCity = townCity;
+            _postNr = postNr;
+        }
+
         public Customer()
         {
 

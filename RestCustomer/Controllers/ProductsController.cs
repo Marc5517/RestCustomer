@@ -67,9 +67,29 @@ namespace RestCustomer.Controllers
 
 
         // PUT api/<ProductsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        [Route("{productId}")]
+        public IActionResult Update(int productId, [FromBody] Product p)
         {
+            //Product p = GetById(productId);
+            //if (p == null)
+            //    return;
+
+            //p.ProductNr = value.ProductNr;
+            //p.CustomerNr = value.CustomerNr;
+            //p.InvoiceNr = value.InvoiceNr;
+            //p.SerialNr = value.SerialNr;
+
+            ManageProduct mp = new ManageProduct();
+            try
+            {
+                mp.UpdateProduct(productId, p);
+                return Ok();
+            }
+            catch (KeyNotFoundException knfe)
+            {
+                return NotFound(knfe.Message);
+            }
         }
 
         // DELETE api/<ProductsController>/5

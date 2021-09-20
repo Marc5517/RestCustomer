@@ -101,6 +101,33 @@ namespace RestCustomer.DBUtil
             // evt. hente sidste måling og sende tilbage
         }
 
+        private const String UPDATE_Product = "UPDATE Product set ProductNr=@PN, CustomerNr=@CN, InvoiceNr=@IN, SerialNr=@SN where ProductId=@ID";
+
+        public void UpdateProduct(int productId, Product product)
+        {
+            Product pro = GetById(productId);
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(UPDATE_Product, conn))
+            {
+                conn.Open();
+                cmd.Parameters.AddWithValue("@ID", productId);
+                cmd.Parameters.AddWithValue("@PN", product.ProductNr);
+                cmd.Parameters.AddWithValue("@CN", product.CustomerNr);
+                cmd.Parameters.AddWithValue("@IN", product.InvoiceNr);
+                cmd.Parameters.AddWithValue("@SN", product.SerialNr);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+                // evt. return rowsAffected == 1 => true if inserted otherwise false
+
+                if (rowsAffected != 1)
+                {
+                    throw new KeyNotFoundException("Id not found was " + productId);
+                }
+            }
+        }
+
+
         private Product ReadNextElement(SqlDataReader reader)
         {
             Product product = new Product();
