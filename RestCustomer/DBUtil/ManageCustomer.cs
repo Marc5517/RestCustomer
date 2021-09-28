@@ -109,7 +109,7 @@ namespace RestCustomer.DBUtil
         }
 
         private const String INSERT =
-            "insert into Customer(Name, Email, Addresse, TownCity, Country, PostNr, TelefonNr, Currency, CVR, PublicEntry) Values(@Name, @Email, @Addresse, @TownCity, @Country, @PostNr, @TelefonNr, @Currency, @CVR, @PublicEntry)";
+            "insert into Customer(Name, Email, Addresse, TownCity, Country, PostNr, TelefonNr, Currency, CVR) Values(@Name, @Email, @Addresse, @TownCity, @Country, @PostNr, @TelefonNr, @Currency, @CVR)";
 
         public void Add(Customer value)
         {
@@ -126,7 +126,6 @@ namespace RestCustomer.DBUtil
                 cmd.Parameters.AddWithValue("@TelefonNr", value.TelefonNr);
                 cmd.Parameters.AddWithValue("@Currency", value.Currency);
                 cmd.Parameters.AddWithValue("@CVR", value.CVR);
-                cmd.Parameters.AddWithValue("@PublicEntry", value.PublicEntry);
 
                 int rowsAffected = cmd.ExecuteNonQuery();
                 // evt. return rowsAffected == 1 => true if inserted otherwise false
@@ -155,7 +154,6 @@ namespace RestCustomer.DBUtil
                 cmd.Parameters.AddWithValue("@TelefonNr", customer.TelefonNr);
                 cmd.Parameters.AddWithValue("@Currency", customer.Currency);
                 cmd.Parameters.AddWithValue("@CVR", customer.CVR);
-                cmd.Parameters.AddWithValue("@PublicEntry", customer.PublicEntry);
 
                 int rowsAffected = cmd.ExecuteNonQuery();
                 // evt. return rowsAffected == 1 => true if inserted otherwise false
@@ -200,7 +198,6 @@ namespace RestCustomer.DBUtil
             customer.TelefonNr = reader.GetInt32(7);
             customer.Currency = reader.GetString(8);
             customer.CVR = reader.GetInt32(9);
-            customer.PublicEntry = reader.GetDateTime(10);
 
             return customer;
         }

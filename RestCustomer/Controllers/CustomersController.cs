@@ -18,12 +18,12 @@ namespace RestCustomer.Controllers
         private string connectionString = ConnectionString.connectionString;
         private static readonly List<Customer> Customers = new List<Customer>()
         {
-            new Customer(1, "Anne Glaubig", "anne@glaubig.dk", "Roskildevej 179", "Roskilde", "Denmark", 3600, 26984054, "DKK", 0, new DateTime(2011, 11, 11)),
-            new Customer(2, "Lene Kirkegaard", "lene@kirkegaard.com", "Skrejrupvej 10", "Rønde", "Denmark", 8410, 76209365, "DKK", 0, new DateTime(2012, 12, 10)),
-            new Customer(3, "Izuma Suzuki", "izum@suzuki.dk", "Somewhere 56", "Don't know", "Netherworld", 4780, 90835622, "NWM", 0, new DateTime(2013, 06, 03)),
-            new Customer(4, "Josef Stalin", "jose@stalin.com", "Hell 666", "6th Circle", "Hell", 6666, 44444444, "HM", 0, new DateTime(2013, 08, 25)),
-            new Customer(5, "Robin Holder", "robi@holder.com", "Roskildevej 45", "Roskilde", "Denmark", 3600, 29076341, "DKK", 0, new DateTime(2015, 03, 16)),
-            new Customer(6, "Max Olegaard", "max@olegaard.dk", "Skrejrupvej 11", "Rønde", "Denmark", 8410, 56781541, "DKK", 0, new DateTime(2021, 09, 07))
+            new Customer(1, "Anne Glaubig", "anne@glaubig.dk", "Roskildevej 179", "Roskilde", "Denmark", 3600, 26984054, "DKK", 0),
+            new Customer(2, "Lene Kirkegaard", "lene@kirkegaard.com", "Skrejrupvej 10", "Rønde", "Denmark", 8410, 76209365, "DKK", 0),
+            new Customer(3, "Izuma Suzuki", "izum@suzuki.dk", "Somewhere 56", "Don't know", "Netherworld", 4780, 90835622, "NWM", 0),
+            new Customer(4, "Josef Stalin", "jose@stalin.com", "Hell 666", "6th Circle", "Hell", 6666, 44444444, "HM", 0),
+            new Customer(5, "Robin Holder", "robi@holder.com", "Roskildevej 45", "Roskilde", "Denmark", 3600, 29076341, "DKK", 0),
+            new Customer(6, "Max Olegaard", "max@olegaard.dk", "Skrejrupvej 11", "Rønde", "Denmark", 8410, 56781541, "DKK", 0)
         };
 
         /// <summary>
