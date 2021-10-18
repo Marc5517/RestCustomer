@@ -41,7 +41,7 @@ namespace RestCustomer.DBUtil
             access.AccessId = reader.GetInt32(0);
             access.CustomerNr = reader.GetInt32(1);
             access.InvoiceNr = reader.GetInt32(2);
-            access.InvoiceLine = reader.GetInt32(3);
+            access.InvoiceLineNr = reader.GetInt32(3);
             access.AgreementGrantToken = reader.GetString(4);
 
             return access;

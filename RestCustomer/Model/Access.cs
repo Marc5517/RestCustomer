@@ -10,7 +10,7 @@ namespace RestCustomer.Model
         private int _accessId;
         private int _customerNr;
         private int _invoiceNr;
-        private int _invoiceLine;
+        private int _invoiceLineNr;
         private string _agreementGrantToken;
 
         public Access()
@@ -18,12 +18,12 @@ namespace RestCustomer.Model
 
         }
 
-        public Access(int accessId, int customerNr, int invoiceNr, int invoiceLine, string agreementGrantToken)
+        public Access(int accessId, int customerNr, int invoiceNr, int invoiceLineNr, string agreementGrantToken)
         {
             _accessId = accessId;
             _customerNr = customerNr;
             _invoiceNr = invoiceNr;
-            _invoiceLine = invoiceLine;
+            _invoiceLineNr = invoiceLineNr;
             _agreementGrantToken = agreementGrantToken;
         }
 
@@ -54,12 +54,12 @@ namespace RestCustomer.Model
             }
         }
 
-        public int InvoiceLine
+        public int InvoiceLineNr
         {
-            get => _invoiceLine;
+            get => _invoiceLineNr;
             set
             {
-                _invoiceLine = value;
+                _invoiceLineNr = value;
             }
         }
 
@@ -75,7 +75,7 @@ namespace RestCustomer.Model
         public override string ToString()
         {
             return $"{nameof(AccessId)}: {_accessId}, {nameof(CustomerNr)}: {_customerNr}, {nameof(InvoiceNr)}: {_invoiceNr}, " +
-                   $"{nameof(InvoiceLine)}: {_invoiceLine} {nameof(AgreementGrantToken)}: {_agreementGrantToken}";
+                   $"{nameof(InvoiceLineNr)}: {_invoiceLineNr} {nameof(AgreementGrantToken)}: {_agreementGrantToken}";
         }
     }
 }
