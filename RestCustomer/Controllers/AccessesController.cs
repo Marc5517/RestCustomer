@@ -14,8 +14,15 @@ namespace RestCustomer.Controllers
     [ApiController]
     public class AccessesController : ControllerBase
     {
+        /// <summary>
+        /// Forbindelsen til ConnectionString som hjælper med forbindelsen til databasen.
+        /// </summary>
         private string connectionString = ConnectionString.connectionString;
 
+        /// <summary>
+        /// Henter alle access fra databasen ved hjælp af en metode fra ManageAccess.
+        /// </summary>
+        /// <returns>Liste af Access</returns>
         // GET: api/<AccessesController>
         [HttpGet]
         public IEnumerable<Access> GetAll()

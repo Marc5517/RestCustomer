@@ -136,6 +136,10 @@ namespace RestCustomer.Model
             }
         }
 
+        /// <summary>
+        /// Viser indholdet af dataen fra kunden/kunder, og vises på denne måde når vi køre restapi.
+        /// </summary>
+        /// <returns>Viser data fra kunden/kunder</returns>
         public override string ToString()
         {
             return $"{nameof(CustomerNr)}: {_customerNr}, {nameof(Name)}: {_name}, " +

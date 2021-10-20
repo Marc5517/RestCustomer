@@ -15,7 +15,14 @@ namespace RestCustomer.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
+        /// <summary>
+        /// Forbindelsen til ConnectionString som hjælper med forbindelsen til databasen.
+        /// </summary>
         private string connectionString = ConnectionString.connectionString;
+
+        /// <summary>
+        /// Liste med kunder, så hvis du ikke kan bruge databasen kan du bruge denne til nogle af metoderne.
+        /// </summary>
         private static readonly List<Customer> Customers = new List<Customer>()
         {
             new Customer(1, "Anne Glaubig", "anne@glaubig.dk", "Roskildevej 179", "Roskilde", "Denmark", 3600, 26984054, "DKK", 0),
@@ -27,9 +34,9 @@ namespace RestCustomer.Controllers
         };
 
         /// <summary>
-        /// Får fat i alle kunder fra databasen
+        /// Får fat i alle kunder fra databasen ved hjælp af metoden fra ManageCustomer, men kan også med listen.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Liste af kunder</returns>
         // GET: api/<CustomersController>
         [HttpGet]
         public IEnumerable<Customer> GetAll()
@@ -40,10 +47,10 @@ namespace RestCustomer.Controllers
         }
 
         /// <summary>
-        /// Få fat i en kunde ud fra id (kundenummer).
+        /// Få fat i en kunde ud fra id (kundenummer) ved hjælp af metode fra ManageCustomer, men kan også med listen.
         /// </summary>
         /// <param name="customerNr"></param>
-        /// <returns></returns>
+        /// <returns>En kunde</returns>
         // GET api/<CustomersController>/5
         [HttpGet]
         [Route("{customerNr}")]
@@ -54,6 +61,11 @@ namespace RestCustomer.Controllers
             //return Customers.Find(c => c.CustomerNr == customerNr);
         }
 
+        /// <summary>
+        /// Henter en liste af kunder ved indtastning kundens adresse, hvor den bruger metoden fra ManageCustomer, men kan også med listen ovenover.
+        /// </summary>
+        /// <param name="addresse"></param>
+        /// <returns>Liste af kunder</returns>
         [HttpGet]
         [Route("addresse/{addresse}")]
         public IEnumerable<Customer> GetCustomerByAddresse(string addresse)
@@ -65,10 +77,10 @@ namespace RestCustomer.Controllers
         }
 
         /// <summary>
-        /// Kan finde en kunde via navn, email, adresse, by eller land.
+        /// Kan finde en kunde via navn, email, adresse, by eller land, hvor den kan bruge metoden fra ManageCustomer eller listen ovenover.
         /// </summary>
         /// <param name="search"></param>
-        /// <returns></returns>
+        /// <returns>En liste af kunder</returns>
         [HttpGet]
         [Route("search/{search}")]
         public IEnumerable<Customer> GetCustomerBySearch(string search)
@@ -80,7 +92,7 @@ namespace RestCustomer.Controllers
         }
 
         /// <summary>
-        /// Denne metode skaber en ny kunde.
+        /// Denne metode skaber en ny kunde, ved hjælp af metoden fra ManageCustomer.
         /// </summary>
         /// <param name="value"></param>
         // POST api/<CustomersController>
@@ -92,11 +104,11 @@ namespace RestCustomer.Controllers
         }
 
         /// <summary>
-        /// Opdatere en kunde.
+        /// Opdatere en kunde via kundens ID, som bruger metoden fra ManageCustomer.
         /// </summary>
         /// <param name="customerNr"></param>
         /// <param name="c"></param>
-        /// <returns></returns>
+        /// <returns>En opdateret kunde</returns>
         // PUT api/<CustomersController>/5
         [HttpPut]
         [Route("{customerNr}")]
@@ -115,10 +127,10 @@ namespace RestCustomer.Controllers
         }
 
         /// <summary>
-        /// Kan slette en kunde ud fra id (kundenummer)
+        /// Kan slette en kunde ud fra id (kundenummer), og, ligesom med de andre rest metoder, bruger en metode fra ManageCustomer.
         /// </summary>
         /// <param name="customerNr"></param>
-        /// <returns></returns>
+        /// <returns>Intet</returns>
         // DELETE api/<CustomersController>/5
         [HttpDelete]
         [Route("{customerNr}")]

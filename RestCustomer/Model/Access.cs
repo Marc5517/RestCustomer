@@ -72,6 +72,10 @@ namespace RestCustomer.Model
             }
         }
 
+        /// <summary>
+        /// Viser indholdet af dataen fra access, og vises på denne måde når vi køre restapi.
+        /// </summary>
+        /// <returns>Indholdet af dataen fra access</returns>
         public override string ToString()
         {
             return $"{nameof(AccessId)}: {_accessId}, {nameof(CustomerNr)}: {_customerNr}, {nameof(InvoiceNr)}: {_invoiceNr}, " +

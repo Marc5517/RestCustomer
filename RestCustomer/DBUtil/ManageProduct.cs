@@ -9,10 +9,17 @@ namespace RestCustomer.DBUtil
 {
     public class ManageProduct
     {
+        /// <summary>
+        /// Forbindelsen til databasen i Azure, hvis der ikke er forbindelse til den, er det nok fordi firewall'en ikke giver adgang til din IP-adresse.
+        /// </summary>
         private const String connectionString = @"Server=tcp:oursqlservice.database.windows.net,1433;Initial Catalog=RestDB;Persist Security Info=False;User ID=Secret!;Password=12345678A!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
         private const String Get_All = "select * from Product";
 
+        /// <summary>
+        /// Henter alle værdier fra Databasen via SQL-kommando.
+        /// </summary>
+        /// <returns>En liste af varer</returns>
         public IEnumerable<Product> GetAll()
         {
             List<Product> liste = new List<Product>();
@@ -36,6 +43,11 @@ namespace RestCustomer.DBUtil
 
         private const String Get_By_Id = "select * from Product Where ProductId = @ID";
 
+        /// <summary>
+        /// Henter en vare fra databasen ved brug af dens ID. Den bruger SQL-kommando som hjælp til det.
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns>En vare</returns>
         public Product GetById(int productId)
         {
             Product p = new Product();
@@ -57,6 +69,11 @@ namespace RestCustomer.DBUtil
 
         private const String Get_By_CustomerNr = "select * from Product Where CustomerNr = @cn";
 
+        /// <summary>
+        /// Henter en liste af varer fra databasen via SQL-kommando, og indtastning af kundens nummer.
+        /// </summary>
+        /// <param name="customerNr"></param>
+        /// <returns>En liste af varer</returns>
         public IEnumerable<Product> GetByCustomerNr(int customerNr)
         {
             List<Product> pList = new List<Product>();
@@ -83,6 +100,10 @@ namespace RestCustomer.DBUtil
 
         private const String INSERT = "insert into Product(ProductNr, CustomerNr, InvoiceNr, SerialNr) Values(@PN, @CN, @IN, @SN)";
 
+        /// <summary>
+        /// Skaber en ny vare til databasen ved hjælp af SQL-kommando.
+        /// </summary>
+        /// <param name="value"></param>
         public void Add(Product value)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -103,6 +124,11 @@ namespace RestCustomer.DBUtil
 
         private const String UPDATE_Product = "UPDATE Product set ProductNr=@PN, CustomerNr=@CN, InvoiceNr=@IN, SerialNr=@SN where ProductId=@ID";
 
+        /// <summary>
+        /// Opdaterer en vare ved hjælp af SQL-kommando og indtastning af varens ID.
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="product"></param>
         public void UpdateProduct(int productId, Product product)
         {
             Product pro = GetById(productId);

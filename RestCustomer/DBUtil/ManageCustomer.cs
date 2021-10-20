@@ -9,10 +9,17 @@ namespace RestCustomer.DBUtil
 {
     public class ManageCustomer
     {
+        /// <summary>
+        /// Forbindelsen til databasen i Azure, hvis der ikke er forbindelse til den, er det nok fordi firewall'en ikke giver adgang til din IP-adresse.
+        /// </summary>
         private const String connectionString = @"Server=tcp:oursqlservice.database.windows.net,1433;Initial Catalog=RestDB;Persist Security Info=False;User ID=Secret!;Password=12345678A!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
         private const String Get_All = "select * from Customer";
 
+        /// <summary>
+        /// Henter alle kunder fra databasen via SQL-kommando.
+        /// </summary>
+        /// <returns>Liste af kunder</returns>
         public IEnumerable<Customer> Get()
         {
             List<Customer> liste = new List<Customer>();
@@ -36,6 +43,11 @@ namespace RestCustomer.DBUtil
 
         private const String Get_By_Id = "select * from Customer WHERE CustomerNr = @ID";
 
+        /// <summary>
+        /// Henter en kunde via ID ved hjælp af SQL-kommando.
+        /// </summary>
+        /// <param name="customerNr"></param>
+        /// <returns>En kunde</returns>
         public Customer GetById(int customerNr)
         {
             Customer c = new Customer();
@@ -57,6 +69,11 @@ namespace RestCustomer.DBUtil
 
         private const String Get_By_Addresse = "select * from Customer WHERE Addresse LIKE @addresse";
 
+        /// <summary>
+        /// Henter alle kunde ved indtastning af adresse via SQL-kommando.
+        /// </summary>
+        /// <param name="addresse"></param>
+        /// <returns>Liste af kunder</returns>
         public IEnumerable<Customer> GetByAddresse(string addresse)
         {
             List<Customer> cAList = new List<Customer>();
@@ -84,6 +101,11 @@ namespace RestCustomer.DBUtil
         private const String Get_By_Search =
             "select * from Customer WHERE Email LIKE @search OR Name LIKE @search OR Addresse LIKE @search OR TownCity LIKE @search OR Country LIKE @search";
 
+        /// <summary>
+        /// Henter alle kunder ved indtastning af email, navn, adresse, by, eller land i search's plads via SQL-kommando.
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns>Liste af kunder</returns>
         public IEnumerable<Customer> GetBySearch(string search)
         {
             List<Customer> cList = new List<Customer>();
@@ -111,6 +133,10 @@ namespace RestCustomer.DBUtil
         private const String INSERT =
             "insert into Customer(Name, Email, Addresse, TownCity, Country, PostNr, TelefonNr, Currency, CVR) Values(@Name, @Email, @Addresse, @TownCity, @Country, @PostNr, @TelefonNr, @Currency, @CVR)";
 
+        /// <summary>
+        /// Skaber en kunde til databasen ved indtastning af kundens værdier via SQL-kommando.
+        /// </summary>
+        /// <param name="value"></param>
         public void Add(Customer value)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -136,6 +162,11 @@ namespace RestCustomer.DBUtil
 
         private const String UPDATE_Customer = "UPDATE Customer set Name=@Name, Email=@Email, Addresse=@Addresse, TownCity=@TownCity, Country=@Country, PostNr=@PostNr, TelefonNr=@TelefonNr, Currency=@Currency, CVR=@CVR, PublicEntry=@PublicEntry where CustomerNr=@ID";
 
+        /// <summary>
+        /// Kan opdatere en kunde i databasen ved at nævne kundens ID og SQL-kommando. Hvis du ikke nævne alle værdierne i kunden, så vil de værdier blive fjernet.
+        /// </summary>
+        /// <param name="customerNr"></param>
+        /// <param name="customer"></param>
         public void UpdateCustomer(int customerNr, Customer customer)
         {
             Customer cust = GetById(customerNr);
@@ -167,6 +198,11 @@ namespace RestCustomer.DBUtil
 
         private const String DELETE_Customer = "DELETE Customer WHERE CustomerNr = @ID";
 
+        /// <summary>
+        /// Sletter en kunde ved hjælp af SQL-kommando. Man skal nævne kundens ID for at fjerne den specifikke kunde.
+        /// </summary>
+        /// <param name="customerNr"></param>
+        /// <returns></returns>
         public Customer DeleteCustomer(int customerNr)
         {
             Customer cust = GetById(customerNr);

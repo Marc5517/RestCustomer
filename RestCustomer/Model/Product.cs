@@ -72,6 +72,10 @@ namespace RestCustomer.Model
             }
         }
 
+        /// <summary>
+        /// Viser indholdet af dataen fra varen/varer, og vises på denne måde når vi køre restapi.
+        /// </summary>
+        /// <returns>Indholdet af varen/varer</returns>
         public override string ToString()
         {
             return $"{nameof(ProductId)}: {_productId}, {nameof(ProductNr)}: {_productNr}, {nameof(CustomerNr)}: {_customerNr}, " +

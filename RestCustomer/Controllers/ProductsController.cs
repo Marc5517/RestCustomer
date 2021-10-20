@@ -14,7 +14,14 @@ namespace RestCustomer.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
+        /// <summary>
+        /// Forbindelsen til ConnectionString som hjælper med forbindelsen til databasen.
+        /// </summary>
         private string connectionString = ConnectionString.connectionString;
+
+        /// <summary>
+        /// Liste af varer.
+        /// </summary>
         private static readonly List<Product> Products = new List<Product>()
         {
             new Product(1, 5, 2, 12, "6666ff"),
@@ -24,6 +31,10 @@ namespace RestCustomer.Controllers
             new Product(5, 34, 20, 23, "5545mf")
         };
 
+        /// <summary>
+        /// Henter en liste af varer fra databasen ved hjælp af metoden fra ManageProduct, og eller fra listen
+        /// </summary>
+        /// <returns>Liste af varer</returns>
         // GET: api/<ProductsController>
         [HttpGet]
         public IEnumerable<Product> GetAll()
@@ -33,6 +44,11 @@ namespace RestCustomer.Controllers
             //return Products;
         }
 
+        /// <summary>
+        /// Henter en varer via ID, hvor det kan være fra databasen eller listen.
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns>En vare</returns>
         // GET api/<ProductsController>/5
         [HttpGet]
         [Route("{productId}")]
@@ -43,6 +59,11 @@ namespace RestCustomer.Controllers
             //return Products.Find(p => p.ProductId == productId);
         }
 
+        /// <summary>
+        /// Henter en liste af varer der har det samme kundenummer, som kan være fra databasen ved hjælp af metoden fra ManageProduct, eller fra listen.
+        /// </summary>
+        /// <param name="customerNr"></param>
+        /// <returns>En liste af varer</returns>
         [HttpGet]
         [Route("customerNr/{customerNr}")]
         public IEnumerable<Product> GetCustomerByAddresse(int customerNr)
@@ -53,6 +74,10 @@ namespace RestCustomer.Controllers
             //return lProducts;
         }
 
+        /// <summary>
+        /// Skaber en ny vare til databasen ved hjælp af metoden fra ManageProduct, eller til listen ovenover, hvor den også skaber en ny vareid til den nye vare.
+        /// </summary>
+        /// <param name="value"></param>
         // POST api/<ProductsController>
         [HttpPost]
         public void AddProduct([FromBody] Product value)
@@ -65,7 +90,12 @@ namespace RestCustomer.Controllers
             mp.Add(value);
         }
 
-
+        /// <summary>
+        /// Opdatere en vare til databasen ved hjælp af metoden fra ManageProduct, eller til listen ovenover.
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="p"></param>
+        /// <returns>En opdateret vare, eller bare en vare uden opdatering</returns>
         // PUT api/<ProductsController>/5
         [HttpPut]
         [Route("{productId}")]
@@ -93,9 +123,9 @@ namespace RestCustomer.Controllers
         }
 
         // DELETE api/<ProductsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
     }
 }
